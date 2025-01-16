@@ -51,6 +51,3 @@ class TestPersonalAccountCreation(unittest.TestCase):
     def test_no_promo_code(self):
         account = KontoOsobiste("Jan", "Kowalski", "62010112345")
         self.assertEqual(account.saldo, 0, "No promo code should result in 0 saldo.")
-
-if __name__ == '__main__':
-    unittest.main()
