@@ -1,11 +1,30 @@
-class KontoOsobiste:
-    def __init__(self, imie, nazwisko, pesel, rabat: str | None = None):
+# feature_7: adding brand accounts and object programming
+class KontoBazowe:
+    def __init__(self):
+
+        self.saldo = 0
+
+    # feature_6: transactions - sending and receieving money
+    def receiving_money(self, amount):
+        self.saldo += amount
+
+    def sending_money(self, amount):
+        if self.saldo < amount:
+            return False
         
+        self.saldo -= amount
+        # some other account should receive the money
+        return True
+
+
+
+class KontoOsobiste(KontoBazowe):
+    def __init__(self, imie, nazwisko, pesel, rabat: str | None = None):
+        super().__init__()
         # Feature_2: add pesel to account ^
         # Feature_3: add pesel validation (11 digits)
         if len(pesel) != 11:
             pesel = "Niepoprawny pesel!"
-
 
         self.imie = imie
         self.nazwisko = nazwisko
@@ -15,9 +34,6 @@ class KontoOsobiste:
         # Feature_4: add promo codes that add +50 to saldo if starts with "PROM_[XYZ]"
         if self.is_eligible_for_promotion():
             self.saldo = 50
-        else:
-            self.saldo = 0
-        pass
 
     def is_eligible_for_promotion(self):
         if self.rabat is None:
@@ -34,14 +50,23 @@ class KontoOsobiste:
         
         return True
 
-    # feature_6: transactions - sending and receieving money
-    def receiving_money(self, amount):
-        self.saldo += amount
 
-    def sending_money(self, amount):
-        if self.saldo < amount:
+
+# feature_7: adding brand accounts and object programming
+class KontoFirmowe(KontoBazowe):
+    def __init__(self, nazwa_firmy, nip):
+        super().__init__()
+        self.nazwa_firmy = nazwa_firmy
+        self.nip = nip
+
+        if not self.validate_nip():
+            self.nip = "Niepoprawny NIP!"
+
+    def validate_nip(self):
+        if len(self.nip) != 10:
             return False
-        else:
-            self.saldo -= amount
-            return True
-
+        
+        if not self.nip.isnumeric():
+            return False
+        
+        return True
