@@ -8,12 +8,12 @@ class KontoBazowe:
     def receiving_money(self, amount):
         self.saldo += amount
 
-    def sending_money(self, amount):
+    def sending_money(self, amount, account_to_send):
         if self.saldo < amount:
             return False
         
         self.saldo -= amount
-        # some other account should receive the money
+        account_to_send.receiving_money(amount) # some account we send money to
         return True
 
 
@@ -49,6 +49,15 @@ class KontoOsobiste(KontoBazowe):
             return False
         
         return True
+    
+    # feature_8: express transfer
+    def send_express_transfer(self, account_to_send, amount):
+        if self.saldo < amount:
+            return False
+        
+        self.saldo -= amount + 5
+        account_to_send.receiving_money(amount)
+        return True
 
 
 
@@ -69,4 +78,13 @@ class KontoFirmowe(KontoBazowe):
         if not self.nip.isnumeric():
             return False
         
+        return True
+
+    # feature_8: express transfer
+    def send_express_transfer(self, amount, account_to_send):
+        if self.saldo < amount:
+            return False
+        
+        self.saldo -= amount + 5
+        account_to_send.receiving_money(amount)
         return True

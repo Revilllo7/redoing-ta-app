@@ -22,8 +22,8 @@ class TestBusinessAccountCreation(unittest.TestCase):
         account.receiving_money(100)
         self.assertEqual(account.saldo, 100, "Receiving money should add to saldo.")
 
-        account.sending_money(50)
+        second_account = KontoFirmowe("DrugieKonto", "0000000000")
+        account.sending_money(50, second_account)
         self.assertEqual(account.saldo, 50, "Sending money should subtract from saldo.")
-
-        account.sending_money(150)
+        account.sending_money(150, second_account)
         self.assertEqual(account.saldo, 50, "Sending more money than available should not be possible.")
