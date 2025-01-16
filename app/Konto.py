@@ -33,3 +33,15 @@ class KontoOsobiste:
             return False
         
         return True
+
+    # feature_6: transactions - sending and receieving money
+    def receiving_money(self, amount):
+        self.saldo += amount
+
+    def sending_money(self, amount):
+        if self.saldo < amount:
+            return False
+        else:
+            self.saldo -= amount
+            return True
+
